@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taste First - Single Ad</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #d5d0c8;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .ad {
+    width: 1080px;
+    height: 1920px;
+    background: #fefcf3;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== TOP SECTION - BRAND + HEADLINE ===== */
+  .top-section {
+    background: linear-gradient(170deg, #0d3b1f 0%, #1a5632 60%, #1a5632 100%);
+    padding: 50px 60px 45px;
+    position: relative;
+  }
+
+  .top-section::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #fefcf3;
+    border-radius: 50% 50% 0 0;
+  }
+
+  .brand-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .brand-logo {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #c8922c, #e8b84a);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  .brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 2px;
+  }
+
+  .top-tag {
+    display: inline-block;
+    background: rgba(200,146,44,0.15);
+    border: 1px solid rgba(200,146,44,0.4);
+    color: #e8b84a;
+    padding: 8px 24px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .top-section h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+  }
+
+  .top-section h1 span { color: #e8b84a; }
+
+  .top-section p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  .top-section p strong { color: #e8b84a; }
+
+  /* ===== PACKAGE VISUAL ===== */
+  .package-section {
+    padding: 15px 55px 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .package-visual {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 30px;
+    position: relative;
+  }
+
+  .pack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Arrows and labels between packs */
+  .plus-sign {
+    font-size: 40px;
+    font-weight: 900;
+    color: #c8922c;
+    margin-bottom: 60px;
+  }
+
+  /* Main big pack */
+  .big-pack .pack-box {
+    width: 300px;
+    height: 340px;
+    background: linear-gradient(145deg, #1a5632, #0d3b1f);
+    border-radius: 24px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 60px rgba(26,86,50,0.25);
+    border: 3px solid #2d7a4a;
+  }
+
+  .big-pack .pack-box::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    border: 1px dashed rgba(255,255,255,0.15);
+    border-radius: 16px;
+  }
+
+  .pack-emoji {
+    font-size: 70px;
+    margin-bottom: 10px;
+  }
+
+  .pack-weight {
+    font-size: 36px;
+    font-weight: 900;
+    color: #fff;
+  }
+
+  .pack-label-inside {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* Seal badge on big pack */
+  .seal-badge {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(220,38,38,0.4);
+    border: 3px solid #fff;
+  }
+
+  .seal-badge .seal-icon { font-size: 24px; }
+  .seal-badge .seal-text {
+    font-size: 8px;
+    color: #fff;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+
+  /* DO NOT OPEN label */
+  .do-not-open {
+    position: absolute;
+    bottom: 20px;
+    background: rgba(220,38,38,0.9);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Small sample pack */
+  .small-pack .pack-box {
+    width: 180px;
+    height: 200px;
+    background: linear-gradient(145deg, #c8922c, #a87725);
+    border-radius: 18px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 40px rgba(200,146,44,0.3);
+    border: 3px solid #e8b84a;
+  }
+
+  .small-pack .pack-box::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px dashed rgba(255,255,255,0.2);
+    border-radius: 12px;
+  }
+
+  .small-pack .pack-emoji { font-size: 44px; margin-bottom: 6px; }
+  .small-pack .pack-weight { font-size: 24px; color: #fff; }
+  .small-pack .pack-label-inside { font-size: 10px; }
+
+  /* Open this first badge */
+  .open-badge {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(22,163,74,0.4);
+    border: 3px solid #fff;
+  }
+
+  .open-badge .seal-icon { font-size: 22px; }
+  .open-badge .seal-text {
+    font-size: 7px;
+    color: #fff;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  /* Labels under packs */
+  .pack-name {
+    margin-top: 16px;
+    font-size: 18px;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  .big-pack .pack-name { color: #1a5632; }
+  .small-pack .pack-name { color: #c8922c; }
+
+  .pack-desc {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* ===== FLOW SECTION ===== */
+  .flow-section {
+    padding: 20px 50px 10px;
+  }
+
+  .flow-title {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .flow-title h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
+
+  .flow-title h2 span { color: #c8922c; }
+
+  /* Flow steps */
+  .flow-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  /* Timeline line */
+  .flow-timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 56px;
+    min-width: 56px;
+  }
+
+  .flow-dot {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .flow-dot.green { background: linear-gradient(135deg, #1a5632, #2d7a4a); }
+  .flow-dot.gold { background: linear-gradient(135deg, #c8922c, #e8b84a); }
+
+  .flow-line {
+    width: 3px;
+    flex: 1;
+    min-height: 16px;
+    background: linear-gradient(180deg, #1a5632, #c8922c);
+    border-radius: 2px;
+  }
+
+  .flow-card {
+    flex: 1;
+    background: #fff;
+    border-radius: 18px;
+    padding: 22px 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.05);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .flow-card.highlight {
+    border: 2px solid #c8922c;
+    box-shadow: 0 6px 24px rgba(200,146,44,0.12);
+    background: #fffdf7;
+  }
+
+  .flow-card-icon {
+    font-size: 40px;
+    min-width: 48px;
+    text-align: center;
+  }
+
+  .flow-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+  }
+
+  .flow-card p {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  .flow-card p strong { color: #1a5632; }
+  .flow-card.highlight p strong { color: #c8922c; }
+
+  /* ===== SPLIT RESULT ===== */
+  .result-section {
+    padding: 10px 50px 20px;
+  }
+
+  .result-or {
+    text-align: center;
+    margin-bottom: 14px;
+  }
+
+  .result-or span {
+    display: inline-block;
+    background: #1a5632;
+    color: #fff;
+    padding: 6px 28px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .result-cards {
+    display: flex;
+    gap: 18px;
+  }
+
+  .result-card {
+    flex: 1;
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+  }
+
+  .result-card.happy {
+    background: linear-gradient(145deg, #f0fdf4, #dcfce7);
+    border: 2px solid #86efac;
+  }
+
+  .result-card.refund {
+    background: linear-gradient(145deg, #fffbeb, #fef3c7);
+    border: 2px solid #fcd34d;
+  }
+
+  .result-card .rc-icon {
+    font-size: 50px;
+    margin-bottom: 12px;
+  }
+
+  .result-card h3 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .result-card.happy h3 { color: #16a34a; }
+  .result-card.refund h3 { color: #d97706; }
+
+  .result-card p {
+    font-size: 13px;
+    color: #777;
+    line-height: 1.5;
+  }
+
+  .result-card p strong {
+    font-weight: 700;
+  }
+
+  .result-card.happy p strong { color: #16a34a; }
+  .result-card.refund p strong { color: #d97706; }
+
+  /* ===== BOTTOM CTA ===== */
+  .bottom-cta {
+    margin-top: auto;
+    background: linear-gradient(170deg, #0d3b1f, #1a5632);
+    padding: 35px 50px 45px;
+    text-align: center;
+    position: relative;
+  }
+
+  .bottom-cta::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #fefcf3;
+    border-radius: 0 0 50% 50%;
+  }
+
+  .cta-badges {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .cta-badge-icon {
+    width: 38px;
+    height: 38px;
+    background: rgba(200,146,44,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #c8922c, #e8b84a);
+    color: #fff;
+    padding: 18px 54px;
+    border-radius: 60px;
+    font-size: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    box-shadow: 0 10px 35px rgba(200,146,44,0.35);
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-sub {
+    margin-top: 16px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-sub strong { color: #25d366; }
+</style>
+</head>
+<body>
+
+<div class="ad">
+  <!-- ===== TOP: BRAND + HEADLINE ===== -->
+  <div class="top-section">
+    <div class="brand-row">
+      <div class="brand-logo">🥜</div>
+      <div class="brand-name">DRY FRUIT HOUSE</div>
+    </div>
+    <div class="top-tag">Taste First Guarantee</div>
+    <h1>We Send You <span>2 Packs.</span><br>Taste Small. Decide Big.</h1>
+    <p>Not sure about quality? We include a <strong>FREE sample pack</strong> with your order.<br>Taste it first — don't like it? Return the sealed big pack for a <strong>full refund.</strong></p>
+  </div>
+
+  <!-- ===== PACKAGE VISUAL ===== -->
+  <div class="package-section">
+    <div class="package-visual">
+      <!-- Big Pack -->
+      <div class="pack big-pack">
+        <div class="pack-box">
+          <div class="seal-badge">
+            <span class="seal-icon">🔒</span>
+            <span class="seal-text">Sealed</span>
+          </div>
+          <div class="pack-emoji">🥜</div>
+          <div class="pack-weight">500g</div>
+          <div class="pack-label-inside">Main Pack</div>
+          <div class="do-not-open">⚠ Don't Open First</div>
+        </div>
+        <div class="pack-name">Main Pack</div>
+        <div class="pack-desc">Your full order — keep it sealed</div>
+      </div>
+
+      <div class="plus-sign">+</div>
+
+      <!-- Small Pack -->
+      <div class="pack small-pack">
+        <div class="pack-box">
+          <div class="open-badge">
+            <span class="seal-icon">👆</span>
+            <span class="seal-text">Open<br>This First</span>
+          </div>
+          <div class="pack-emoji">🥜</div>
+          <div class="pack-weight">50g</div>
+          <div class="pack-label-inside">Sample</div>
+        </div>
+        <div class="pack-name">Taste First Pack</div>
+        <div class="pack-desc">FREE sample — open & taste this</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FLOW ===== -->
+  <div class="flow-section">
+    <div class="flow-title">
+      <h2>How It <span>Works</span></h2>
+    </div>
+
+    <div class="flow-steps">
+      <!-- Step 1 -->
+      <div class="flow-step">
+        <div class="flow-timeline">
+          <div class="flow-dot green">1</div>
+          <div class="flow-line"></div>
+        </div>
+        <div class="flow-card">
+          <div class="flow-card-icon">🛒</div>
+          <div>
+            <h3>Select "Taste First" at Checkout</h3>
+            <p>Choose refund protection while ordering. A <strong>free sample pack</strong> is added automatically.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="flow-step">
+        <div class="flow-timeline">
+          <div class="flow-dot green">2</div>
+          <div class="flow-line"></div>
+        </div>
+        <div class="flow-card">
+          <div class="flow-card-icon">📦</div>
+          <div>
+            <h3>Receive 2 Packs</h3>
+            <p>You get a <strong>sealed main pack</strong> + a small <strong>"Taste First" sample</strong>. Open only the small one.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="flow-step">
+        <div class="flow-timeline">
+          <div class="flow-dot gold">3</div>
+        </div>
+        <div class="flow-card highlight">
+          <div class="flow-card-icon">😋</div>
+          <div>
+            <h3>Taste the Sample</h3>
+            <p>Open the small pack, taste it. <strong>Check the quality yourself</strong> before touching the big pack.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RESULT ===== -->
+  <div class="result-section">
+    <div class="result-or"><span>Then You Decide</span></div>
+    <div class="result-cards">
+      <div class="result-card happy">
+        <div class="rc-icon">😍</div>
+        <h3>Loved It?</h3>
+        <p>Open the main pack<br>and <strong>enjoy your premium<br>dry fruits!</strong></p>
+      </div>
+      <div class="result-card refund">
+        <div class="rc-icon">😐</div>
+        <h3>Not Satisfied?</h3>
+        <p>Return the <strong>sealed main pack</strong><br>and get a<br><strong>100% full refund!</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BOTTOM CTA ===== -->
+  <div class="bottom-cta">
+    <div class="cta-badges">
+      <div class="cta-badge">
+        <div class="cta-badge-icon">🎁</div>
+        <span>Free Sample</span>
+      </div>
+      <div class="cta-badge">
+        <div class="cta-badge-icon">🔒</div>
+        <span>Tamper-Proof</span>
+      </div>
+      <div class="cta-badge">
+        <div class="cta-badge-icon">💰</div>
+        <span>Full Refund</span>
+      </div>
+      <div class="cta-badge">
+        <div class="cta-badge-icon">🚚</div>
+        <span>Fast Delivery</span>
+      </div>
+    </div>
+    <a href="#" class="cta-btn">🛒 Order Risk-Free Now</a>
+    <p class="cta-sub">WhatsApp Order: <strong>+91 XXXXX XXXXX</strong></p>
+  </div>
+</div>
+
+</body>
+</html>
