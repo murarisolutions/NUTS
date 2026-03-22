@@ -1,4 +1,4 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import StoreLayout from '@/Layouts/StoreLayout';
 import ProductCard from '@/Components/ProductCard';
@@ -54,10 +54,6 @@ const heroSlides = [
 
 export default function Home({ categories, featuredProducts, giftBoxes, testimonials }) {
     const [activeSlide, setActiveSlide] = useState(0);
-    const { data, setData, post, processing, reset, errors } = useForm({
-        email: '',
-    });
-
     useEffect(() => {
         const interval = setInterval(() => {
             setActiveSlide((prev) => (prev + 1) % heroSlides.length);
@@ -65,13 +61,6 @@ export default function Home({ categories, featuredProducts, giftBoxes, testimon
         return () => clearInterval(interval);
     }, []);
 
-    const handleNewsletterSubmit = (e) => {
-        e.preventDefault();
-        post(route('newsletter.store'), {
-            preserveScroll: true,
-            onSuccess: () => reset('email'),
-        });
-    };
 
     return (
         <StoreLayout>
@@ -449,38 +438,6 @@ export default function Home({ categories, featuredProducts, giftBoxes, testimon
                 </div>
             </section>
 
-            {/* ===== NEWSLETTER SECTION ===== */}
-            <section className="newsletter">
-                <div className="container">
-                    <div className="newsletter-inner">
-                        <div className="newsletter-content">
-                            <span className="section-tag">Stay Updated</span>
-                            <h2>Subscribe to Our Newsletter</h2>
-                            <p>Get exclusive offers, new product alerts, and healthy recipes delivered to your inbox.</p>
-                        </div>
-                        <form className="newsletter-form" onSubmit={handleNewsletterSubmit}>
-                            <div className="newsletter-input-group">
-                                <input
-                                    type="email"
-                                    placeholder="Enter your email address"
-                                    value={data.email}
-                                    onChange={(e) => setData('email', e.target.value)}
-                                    required
-                                />
-                                <button type="submit" disabled={processing}>
-                                    {processing ? 'Subscribing...' : 'Subscribe'}
-                                </button>
-                            </div>
-                            {errors.email && (
-                                <p style={{ color: '#fca5a5', fontSize: '13px', marginTop: '4px' }}>{errors.email}</p>
-                            )}
-                            <p className="newsletter-note">
-                                <i className="fas fa-lock"></i> We respect your privacy. Unsubscribe anytime.
-                            </p>
-                        </form>
-                    </div>
-                </div>
-            </section>
         </StoreLayout>
     );
 }

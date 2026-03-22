@@ -46,7 +46,7 @@ export default function ProductCard({ product }) {
                 </div>
             </Link>
             <div className="product-info">
-                <span className="product-category">{product.category?.name}</span>
+                <span className="product-category">{product.category?.name || ''}</span>
                 <h3 className="product-name">
                     <Link href={route('product.show', product.slug)}>{product.name}</Link>
                 </h3>

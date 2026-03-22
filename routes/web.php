@@ -6,7 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\NewsletterController;
+
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
@@ -27,15 +27,13 @@ Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'contactStore'])->name('contact.store');
 Route::get('/bulk-order', [PageController::class, 'bulkOrder'])->name('bulk-order');
 Route::post('/bulk-order', [PageController::class, 'bulkOrderStore'])->name('bulk-order.store');
-Route::get('/locations', [PageController::class, 'locations'])->name('locations');
-Route::get('/careers', [PageController::class, 'career'])->name('careers');
+
 Route::get('/privacy-policy', [PageController::class, 'privacy'])->name('privacy');
 Route::get('/terms-and-conditions', [PageController::class, 'terms'])->name('terms');
 Route::get('/refund-policy', [PageController::class, 'refundPolicy'])->name('refund-policy');
 Route::get('/shipping-policy', [PageController::class, 'shipping'])->name('shipping');
 
-// Newsletter
-Route::post('/newsletter', [NewsletterController::class, 'store'])->name('newsletter.store');
+
 
 // Cart (accessible to guests and authenticated users)
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -95,11 +93,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/contacts/{contact}', [App\Http\Controllers\Admin\ContactController::class, 'show'])->name('contacts.show');
     Route::delete('/contacts/{contact}', [App\Http\Controllers\Admin\ContactController::class, 'destroy'])->name('contacts.destroy');
 
-    Route::resource('locations', App\Http\Controllers\Admin\LocationController::class)->except(['show']);
-    Route::resource('careers', App\Http\Controllers\Admin\CareerController::class);
-
-    Route::get('/subscribers', [App\Http\Controllers\Admin\SubscriberController::class, 'index'])->name('subscribers.index');
-    Route::delete('/subscribers/{subscriber}', [App\Http\Controllers\Admin\SubscriberController::class, 'destroy'])->name('subscribers.destroy');
 
     // Taste First Settings
     Route::get('/taste-first/settings', [App\Http\Controllers\Admin\TasteFirstSettingController::class, 'edit'])->name('taste-first.edit');

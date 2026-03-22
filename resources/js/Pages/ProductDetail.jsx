@@ -1,7 +1,7 @@
 import StoreLayout from '@/Layouts/StoreLayout';
 import ProductCard from '@/Components/ProductCard';
 import { Head, Link, router } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { imageUrl } from '@/utils';
 
 const EMOJIS = {
@@ -21,6 +21,34 @@ export default function ProductDetail({ product, relatedProducts, tasteFirstEnab
         product.images?.find(img => img.is_primary) || product.images?.[0] || null
     );
     const [isZoomed, setIsZoomed] = useState(false);
+    const [autoSlide, setAutoSlide] = useState(true);
+
+    const validImagesEarly = product.images?.filter(img => imageUrl(img.image_path)) || [];
+
+    // Auto-slide images every 3 seconds
+    const goToNextImage = useCallback(() => {
+        if (validImagesEarly.length <= 1) return;
+        setMainImage(prev => {
+            const currentIndex = validImagesEarly.findIndex(img => img.id === prev?.id);
+            const nextIndex = (currentIndex + 1) % validImagesEarly.length;
+            return validImagesEarly[nextIndex];
+        });
+    }, [validImagesEarly]);
+
+    const goToPrevImage = useCallback(() => {
+        if (validImagesEarly.length <= 1) return;
+        setMainImage(prev => {
+            const currentIndex = validImagesEarly.findIndex(img => img.id === prev?.id);
+            const prevIndex = (currentIndex - 1 + validImagesEarly.length) % validImagesEarly.length;
+            return validImagesEarly[prevIndex];
+        });
+    }, [validImagesEarly]);
+
+    useEffect(() => {
+        if (!autoSlide || validImagesEarly.length <= 1) return;
+        const interval = setInterval(goToNextImage, 3000);
+        return () => clearInterval(interval);
+    }, [autoSlide, goToNextImage, validImagesEarly.length]);
 
     const emoji = EMOJIS[product.category?.slug] || '🥜';
 
@@ -60,8 +88,6 @@ export default function ProductDetail({ product, relatedProducts, tasteFirstEnab
         return stars;
     };
 
-    const validImages = product.images?.filter(img => imageUrl(img.image_path)) || [];
-
     return (
         <StoreLayout>
             <Head title={product.name} />
@@ -87,8 +113,8 @@ export default function ProductDetail({ product, relatedProducts, tasteFirstEnab
                         <div className="product-gallery">
                             <div
                                 className={`product-main-image ${isZoomed ? 'zoomed' : ''}`}
-                                onMouseEnter={() => setIsZoomed(true)}
-                                onMouseLeave={() => setIsZoomed(false)}
+                                onMouseEnter={() => { setIsZoomed(true); setAutoSlide(false); }}
+                                onMouseLeave={() => { setIsZoomed(false); setAutoSlide(true); }}
                             >
                                 {imageUrl(mainImage?.image_path) ? (
                                     <img
@@ -116,6 +142,31 @@ export default function ProductDetail({ product, relatedProducts, tasteFirstEnab
                                     {emoji}
                                 </div>
 
+                                {/* Navigation Arrows */}
+                                {validImagesEarly.length > 1 && (
+                                    <>
+                                        <button className="gallery-nav gallery-nav-prev" onClick={(e) => { e.stopPropagation(); goToPrevImage(); setAutoSlide(false); setTimeout(() => setAutoSlide(true), 5000); }}>
+                                            <i className="fas fa-chevron-left"></i>
+                                        </button>
+                                        <button className="gallery-nav gallery-nav-next" onClick={(e) => { e.stopPropagation(); goToNextImage(); setAutoSlide(false); setTimeout(() => setAutoSlide(true), 5000); }}>
+                                            <i className="fas fa-chevron-right"></i>
+                                        </button>
+                                    </>
+                                )}
+
+                                {/* Image Counter Dots */}
+                                {validImagesEarly.length > 1 && (
+                                    <div className="gallery-dots">
+                                        {validImagesEarly.map((img, idx) => (
+                                            <span
+                                                key={img.id}
+                                                className={`gallery-dot ${mainImage?.id === img.id ? 'active' : ''}`}
+                                                onClick={() => { setMainImage(img); setAutoSlide(false); setTimeout(() => setAutoSlide(true), 5000); }}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+
                                 {product.badge && (
                                     <span className={`product-badge ${product.badge === 'Best Seller' ? 'best-seller' : product.badge === 'New' ? 'new' : 'premium'}`}>
                                         {product.badge}
@@ -129,13 +180,13 @@ export default function ProductDetail({ product, relatedProducts, tasteFirstEnab
                                 )}
                             </div>
 
-                            {validImages.length > 1 && (
+                            {validImagesEarly.length > 1 && (
                                 <div className="product-thumbnails">
-                                    {validImages.map((img) => (
+                                    {validImagesEarly.map((img) => (
                                         <button
                                             key={img.id}
                                             className={`product-thumb ${mainImage?.id === img.id ? 'active' : ''}`}
-                                            onClick={() => setMainImage(img)}
+                                            onClick={() => { setMainImage(img); setAutoSlide(false); setTimeout(() => setAutoSlide(true), 5000); }}
                                         >
                                             <img
                                                 src={imageUrl(img.image_path)}
@@ -151,7 +202,7 @@ export default function ProductDetail({ product, relatedProducts, tasteFirstEnab
                         <div className="product-detail-info">
                             {product.category && (
                                 <Link href={route('category.show', product.category.slug)} className="pd-category-link">
-                                    {emoji} {product.category.name}
+                                    {product.category.name}
                                 </Link>
                             )}
 

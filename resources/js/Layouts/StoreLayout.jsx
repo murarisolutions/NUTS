@@ -202,9 +202,6 @@ export default function StoreLayout({ children }) {
                     <Link href={route('contact')} onClick={() => setShopSheetOpen(false)}>
                         <i className="fas fa-headset"></i> Contact Us
                     </Link>
-                    <Link href={route('careers')} onClick={() => setShopSheetOpen(false)}>
-                        <i className="fas fa-briefcase"></i> Careers
-                    </Link>
                 </div>
             </div>
 
@@ -266,7 +263,6 @@ export default function StoreLayout({ children }) {
                                 <li><Link href={route('about')}><i className="fas fa-chevron-right"></i> About Us</Link></li>
                                 <li><Link href={route('contact')}><i className="fas fa-chevron-right"></i> Contact</Link></li>
                                 <li><Link href={route('bulk-order')}><i className="fas fa-chevron-right"></i> Bulk Orders</Link></li>
-                                <li><Link href={route('careers')}><i className="fas fa-chevron-right"></i> Careers</Link></li>
                             </ul>
                         </div>
                         <div className="footer-col">
